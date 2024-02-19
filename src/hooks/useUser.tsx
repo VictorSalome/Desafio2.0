@@ -3,18 +3,15 @@ import { IUser } from "../interfaces/user.Interface";
 import { v4 as uuidv4 } from 'uuid';
 
 
-interface Props {
-    setUser: (user: IUser) => void,
-    getAllUsers: () => IUser[],
-}
 
-const useUser = (): Props => {
+
+const useUser = () => {
     const [users, setUsers] = useState<IUser[]>(() => {
         const storedDataString = localStorage.getItem('userData');
         return storedDataString ? JSON.parse(storedDataString) : [];
     });
 
-    
+
     const setUser = (data: IUser) => {
         const newUser: IUser = {
             ...data,
@@ -26,36 +23,33 @@ const useUser = (): Props => {
         localStorage.setItem('userData', JSON.stringify(updatedUsers));
     }
 
+    const editUser = (data: IUser) => {
+        const userList = users.filter(user => user.id !== data.id)
+        const updatedUsers = [...userList, data]
+        setUsers(updatedUsers)
+        localStorage.setItem('userData', JSON.stringify(updatedUsers));
+
+    }
+
+    const deleteUser = (data: IUser) => {
+        const userList = users.filter(user => user.id !== data.id)
+        const removeUsers = userList
+        setUsers(removeUsers)
+        localStorage.setItem('userData', JSON.stringify(removeUsers));
+
+    }
+
     const getAllUsers = () => {
         return users;
     }
 
-    /**
-     * 
-     *  -- codigo antigo
-    const editUser = (userId: string, field: string, value: string) => {
-        const updatedUsers = users.map(user => {
-            if(user.id === userId) {
-                return {
-                    ...user,
-                    [field]: value
-                }
-            }
 
-            return user
-        })
-
-        setUsers(updatedUsers);
-        localStorage.setItem('userData', JSON.stringify(updatedUsers));
-    }
-     */
-
-
-    
     return {
-     setUser,
-     getAllUsers
-     
+        setUser,
+        getAllUsers,
+        editUser,
+        deleteUser
+
     }
 }
 

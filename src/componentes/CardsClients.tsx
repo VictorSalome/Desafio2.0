@@ -36,7 +36,7 @@ const CardsClients = () => {
                         <BasicMenu status={cliente.status} id={cliente.id} />
                     </div>
                     <div>
-                        <ModalEdit />
+                        <ModalEdit cliente={cliente} />
                     </div>
                 </div>
             ))}
