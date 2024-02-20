@@ -7,6 +7,7 @@ import { TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { IUser } from '../interfaces/user.Interface';
 import useUser from '../hooks/useUser';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const style = {
@@ -28,9 +29,6 @@ export default function ModalEdit({ cliente }: { cliente: IUser }) {
     const useres = useUser()
 
 
-    console.log(cliente)
-
-
     const { register,
         handleSubmit,
     } = useForm<Omit<IUser, 'id'>>({
@@ -46,15 +44,33 @@ export default function ModalEdit({ cliente }: { cliente: IUser }) {
     })
 
     const onSubmit = (data: Omit<IUser, 'id'>) => {
-        console.log("dataaas", data)
+
         useres.editUser({ ...data, id: cliente.id })
-        window.location.reload()
+
+        if (useres) {
+            toast.success("Usuário Alterado");
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+
+
+
 
     }
 
     const handleDelete = () => {
         useres.deleteUser(cliente)
-        window.location.reload()
+
+
+        if (cliente) {
+            toast.success("Usuário excluído");
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+
+
 
     }
 
@@ -65,7 +81,9 @@ export default function ModalEdit({ cliente }: { cliente: IUser }) {
 
 
     return (
+
         <div>
+            <ToastContainer />
             <div className='flex gap-5'>
                 <button onClick={handleOpen} className="border border-orange-600 hover:bg-orange-400 text-orange-500 hover:text-gray-200 font-sans flex items-center justify-center p-2 rounded w-24">
                     <FaEdit />
@@ -138,7 +156,7 @@ export default function ModalEdit({ cliente }: { cliente: IUser }) {
 
                         />
                         <div className='flex justify-between'>
-                            <button type='submit' className='border border-orange-600 hover:bg-orange-400 text-orange-500 hover:text-gray-200 font-sans items-center rounded w-24'>Enviar</button>
+                            <button type='submit' className='border border-orange-600 hover:bg-orange-400 text-orange-500 hover:text-gray-200 font-sans items-center rounded w-24'>Salvar</button>
                             <button onClick={refreshPage} className='border border-orange-600 hover:bg-orange-400 text-orange-500 hover:text-gray-200 font-sans items-center rounded w-24'>Voltar</button>
                         </div>
 

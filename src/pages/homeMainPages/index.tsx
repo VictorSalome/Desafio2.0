@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 const HomeMainPages = () => {
     return (
-        <main className="flex items-center justify-center w-full">
+        <main className="flex items-center justify-center w-full mt-10">
             <div className="w-full max-w-screen-xl">
                 <section className="flex flex-col mx-auto">
                     <div className="flex items-center">
