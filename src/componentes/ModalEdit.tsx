@@ -48,26 +48,35 @@ export default function ModalEdit({ cliente }: { cliente: IUser }) {
     const onSubmit = (data: Omit<IUser, 'id'>) => {
         console.log("dataaas", data)
         useres.editUser({ ...data, id: cliente.id })
+        window.location.reload()
 
     }
 
     const handleDelete = () => {
         useres.deleteUser(cliente)
+        window.location.reload()
 
+    }
+
+    const refreshPage = () => {
+        window.location.reload()
     }
 
 
 
     return (
         <div>
-            <button onClick={handleOpen} className="border border-orange-600 hover:bg-orange-400 text-orange-500 hover:text-gray-200 font-sans flex items-center justify-center p-2 rounded w-32">
-                <FaEdit />
-                Editar
-            </button>
-            <button onClick={handleDelete} className="border border-red-600 hover:bg-red-400 text-red-500 hover:text-gray-200 font-sans flex items-center justify-center p-2 rounded w-32">
-                <FaTrash />
-                Excluir
-            </button>
+            <div className='flex gap-5'>
+                <button onClick={handleOpen} className="border border-orange-600 hover:bg-orange-400 text-orange-500 hover:text-gray-200 font-sans flex items-center justify-center p-2 rounded w-24">
+                    <FaEdit />
+                    Editar
+                </button>
+                <button onClick={handleDelete} className="border border-red-600 hover:bg-red-400 text-red-500 hover:text-gray-200 font-sans flex items-center justify-center p-2 rounded w-24">
+                    <FaTrash />
+                    Excluir
+                </button>
+            </div>
+
 
             <Modal
                 open={open}
@@ -128,7 +137,11 @@ export default function ModalEdit({ cliente }: { cliente: IUser }) {
                             {...register("telefone", { required: true })}
 
                         />
-                        <button type='submit'>Enviar</button>
+                        <div className='flex justify-between'>
+                            <button type='submit' className='border border-orange-600 hover:bg-orange-400 text-orange-500 hover:text-gray-200 font-sans items-center rounded w-24'>Enviar</button>
+                            <button onClick={refreshPage} className='border border-orange-600 hover:bg-orange-400 text-orange-500 hover:text-gray-200 font-sans items-center rounded w-24'>Voltar</button>
+                        </div>
+
                     </form>
 
                 </Box>

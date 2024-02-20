@@ -16,6 +16,8 @@
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
+    "install": "^0.13.0",
+    "npm": "^10.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",

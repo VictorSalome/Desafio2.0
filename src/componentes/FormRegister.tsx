@@ -12,6 +12,9 @@ import useUser from '../hooks/useUser';
 import { Link } from 'react-router-dom';
 
 
+
+
+
 const schema = yup
     .object({
         name: yup.string().required("O nome é obrigatorio"),
