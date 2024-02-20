@@ -1,47 +1,49 @@
-
-import BasicMenu from './DropdownHome';
-import { useEffect, useState } from 'react';
-import { IUser } from '../interfaces/user.Interface';
-import ModalEdit from './ModalEdit';
-
-
+import BasicMenu from "./DropdownHome";
+import { IUser } from "../interfaces/user.Interface";
+import ModalEdit from "./ModalEdit";
+import useUser from "../hooks/useUser";
 
 const CardsClients = () => {
-    const [clientes, setClientes] = useState<IUser[]>([]);
+  const data = useUser();
 
+  const TotalClients = data.users.length;
 
-    useEffect(() => {
-        // Recuperando os usuários do Local Storage
-        const storedDataString = localStorage.getItem('userData');
-        const users = storedDataString ? JSON.parse(storedDataString) : [];
+  return (
+    <div className="flex flex-col gap-5 text-lg font-sans text-gray-500 ">
+      {data.users.map((cliente: IUser) => (
+        <div
+          key={cliente.id}
+          className="border border-gray-200 rounded-md flex flex-col justify-between items-center md:flex-row p-4 "
+        >
+          <div className="w-full">
+            <h2 className="text-base">
+              <strong>Nome:</strong> {cliente.name}
+            </h2>
+            <p className="text-base">
+              <strong>Email:</strong> {cliente.email}
+            </p>
+          </div>
 
-        setClientes(users);
-    }, []);
+          <div className="flex w-full mb-3 flex-col md:items-center">
+            <p className="text-sm">
+              <strong>CPF:</strong> {cliente.cpf}
+            </p>
+            <p className="text-sm">
+              <strong>Telefone:</strong> {cliente.telefone}
+            </p>
+          </div>
 
-    return (
-        <article className='flex flex-col gap-5 text-lg font-sans text-gray-500'>
-            {clientes.map((cliente: IUser, index: number) => (
-                <div key={index} className='border border-gray-200 flex justify-between h-24 items-center px-2'>
-                    <div className='w-full'>
-                        <h2>{cliente.name}</h2>
-                        <p>{cliente.email}</p>
-                    </div>
-
-                    <div className='flex flex-col items-center w-full'>
-                        <p>{cliente.cpf}</p>
-                        <p>{cliente.telefone}</p>
-                    </div>
-
-                    <div className="flex items-center w-full ">
-                        <BasicMenu status={cliente.status} id={cliente.id} />
-                    </div>
-                    <div>
-                        <ModalEdit cliente={cliente} />
-                    </div>
-                </div>
-            ))}
-        </article>
-    )
-}
+          <div className="flex w-full  md:items-center">
+            <BasicMenu status={cliente.status} id={cliente.id} />
+          </div>
+          <div>
+            <ModalEdit users={data} cliente={cliente} />
+          </div>
+        </div>
+      ))}
+      <h1>Total de Clientes: {<strong>{TotalClients}</strong>}</h1>
+    </div>
+  );
+};
 
 export default CardsClients;
